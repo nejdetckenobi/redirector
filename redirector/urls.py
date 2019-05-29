@@ -16,12 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from forwarder.views import forward
+from users.views import signup
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('users/', include('django.contrib.auth.urls')),
     path('api/users/', include('users.urls')),
     path('api/redirections/', include('redirections.urls')),
-    path('api/api-auth', include('rest_framework.urls',
-                                 namespace='rest_framework')),
+    path('api/api-auth/', include('rest_framework.urls',
+                                  namespace='rest_framework')),
+    path('register/', signup),
     re_path(r'([A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12})', forward),
 ]

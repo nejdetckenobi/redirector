@@ -5,12 +5,12 @@ from .serializers import RedirectionSerializer
 
 
 class RedirectionViewSet(viewsets.GenericViewSet,
+                         mixins.UpdateModelMixin,
                          mixins.CreateModelMixin,
                          mixins.RetrieveModelMixin,
                          mixins.ListModelMixin,
                          mixins.DestroyModelMixin):
     serializer_class = RedirectionSerializer
 
-
     def get_queryset(self):
-        return Redirection.objects.all()
+        return Redirection.objects.filter(user_id=self.request.user.id)

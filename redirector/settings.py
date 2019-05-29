@@ -60,7 +60,7 @@ ROOT_URLCONF = 'redirector.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR, os.path.join(BASE_DIR, 'templates')],  # NOQA
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,13 +127,17 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',  # NOQA
-    'PAGE_SIZE': 10
-}
+    'PAGE_SIZE': 10,
 
-REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     )
 }
 
+
 LOGIN_REDIRECT_URL = '/api/'
+
+try:
+    from redirector.settings_local import *
+except ImportError:
+    pass
