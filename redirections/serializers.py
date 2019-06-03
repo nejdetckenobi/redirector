@@ -5,4 +5,5 @@ from .models import Redirection
 class RedirectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Redirection
-        fields = ('id', 'user', 'unique_id', 'url')
+        fields = ('id', 'unique_id', 'url',
+                  'is_active', 'is_permanent')

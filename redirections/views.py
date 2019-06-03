@@ -12,5 +12,11 @@ class RedirectionViewSet(viewsets.GenericViewSet,
                          mixins.DestroyModelMixin):
     serializer_class = RedirectionSerializer
 
+    class Meta:
+        ordering = ['-id']
+
     def get_queryset(self):
         return Redirection.objects.filter(user_id=self.request.user.id)
+
+    def perform_create(self, serializer):
+        serializer.validated_data['user_id'] = self.request.user.id

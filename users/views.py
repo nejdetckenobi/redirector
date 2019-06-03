@@ -15,13 +15,12 @@ class UserViewSet(viewsets.GenericViewSet,
 
 def signup(request):
     if request.method == 'POST':
-        from ipdb import set_trace; set_trace()
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = True
             user.save()
-        return redirect('/login', permanent=False)
+        return redirect('/auth/login', permanent=False)
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})

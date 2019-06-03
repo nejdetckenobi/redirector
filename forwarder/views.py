@@ -10,4 +10,4 @@ def forward(request, unique_id):
         raise Http404()
 
     forward_url = redirection.url
-    return redirect(forward_url, permanent=False)
+    return redirect(forward_url, permanent=redirection.is_permanent)

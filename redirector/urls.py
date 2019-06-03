@@ -17,15 +17,20 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from forwarder.views import forward
 from users.views import signup
+from rest_framework.routers import DefaultRouter
+from redirections.views import RedirectionViewSet
+from users.views import UserViewSet
 
+api_router = DefaultRouter()
+api_router.register('redirections', RedirectionViewSet, basename='redirections')
+api_router.register('users', UserViewSet, basename='users')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', include('django.contrib.auth.urls')),
-    path('api/users/', include('users.urls')),
-    path('api/redirections/', include('redirections.urls')),
+    path('api/', include(api_router.urls)),
     path('api/api-auth/', include('rest_framework.urls',
                                   namespace='rest_framework')),
+    path('auth/', include('django.contrib.auth.urls')),
     path('register/', signup),
     re_path(r'([A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12})', forward),
 ]

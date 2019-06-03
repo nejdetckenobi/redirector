@@ -6,3 +6,4 @@ class Redirection(models.Model):
     url = models.CharField(max_length=256)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
+    is_permanent = models.BooleanField(default=False)
